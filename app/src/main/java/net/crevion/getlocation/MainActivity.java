@@ -3,19 +3,20 @@ package net.crevion.getlocation;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements LocationListener {
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                     //                                          int[] grantResults)
                     // to handle the case where the user grants the permission. See the documentation
                     // for ActivityCompat#requestPermissions for more details.
-                    
+
                     progressDialog.dismiss();
                     return;
                 }
@@ -68,6 +69,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             }
         });
 
+
+    }
+
+    private void startActivityForResult(Intent intent) {
 
     }
 
@@ -103,7 +108,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
-
     }
 
     @Override
@@ -114,5 +118,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     @Override
     public void onProviderDisabled(String provider) {
         progressDialog.dismiss();
+        startActivityForResult(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), 0);
     }
 }
